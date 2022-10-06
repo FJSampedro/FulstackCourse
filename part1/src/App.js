@@ -1,29 +1,27 @@
 
 const App = () => {
+  const course = 'Half Stack application development'
+  const part1 = 'Fundamentals of React'
+  const exercises1 = 10
+  const part2 = 'Using props to pass data'
+  const exercises2 = 7
+  const part3 = 'State of a component'
+  const exercises3 = 14
 
-  console.log('Hello from component')
-  const a = 10
-  const b = 20
   return (
     <div>
-      <Hello name="Mundo" suma={a+b}>
-      </Hello>
-      <Hello name="Pascualet" suma={a+b}>
-      </Hello>
-      <Hello name="Eufrasio" suma={a+b}>
-      </Hello>
-      <p>{a} plus {b} is {a + b}</p>
+      <h1>{course}</h1>
+      <p>
+        {part1} {exercises1}
+      </p>
+      <p>
+        {part2} {exercises2}
+      </p>
+      <p>
+        {part3} {exercises3}
+      </p>
+      <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
     </div>
-  )
-}
-
-const Hello = (props) => {
-  const now = new Date()
-  return (
-    <>
-      <p>Hola {props.name}.<br></br> {now.toString()} <br></br> it's time to learn!!!</p>
-      <h1>SUMAAMOOOH {props.suma}</h1>
-    </>
   )
 }
 
