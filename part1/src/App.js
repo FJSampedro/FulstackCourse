@@ -1,30 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+const App = () => {
+
+  console.log('Hello from component')
+  const a = 10
+  const b = 20
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Hello name="Mundo" suma={a+b}>
+      </Hello>
+      <Hello name="Pascualet" suma={a+b}>
+      </Hello>
+      <Hello name="Eufrasio" suma={a+b}>
+      </Hello>
+      <p>{a} plus {b} is {a + b}</p>
     </div>
-  );
+  )
 }
-// const App=()=>(
-//   <div>
-//     <p>Hola mundo</p>
-//   </div>
-// )
+
+const Hello = (props) => {
+  const now = new Date()
+  return (
+    <>
+      <p>Hola {props.name}.<br></br> {now.toString()} <br></br> it's time to learn!!!</p>
+      <h1>SUMAAMOOOH {props.suma}</h1>
+    </>
+  )
+}
 
 export default App;
