@@ -16,7 +16,7 @@ const App = () => {
   //console.log('hello', who)
   //}
   //Una arrow function que devuelve una arrow function definida en su interior
-  
+
   const handleLeftClick = () => {
     setClicks({ ...clicks, left: clicks.left + 1, allClicks: clicks.allClicks.concat("L") })
   }
@@ -26,6 +26,11 @@ const App = () => {
   const handleRightClick = () => {
     setClicks({ ...clicks, right: clicks.right + 1, allClicks: clicks.allClicks.concat("R") })
   }
+
+  const Display = props => <div>{props.value}</div>
+  //Se puede definir componentes DENTRO de otro componente (en este caso Display dentro de App)
+  //Pero NO se debe hacer nunca puesto que react tratara cada actualizacion de este como un componente nuevo 
+  // y le imposibilitara optimizarlo.
 
   return (
     <div>
