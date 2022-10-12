@@ -8,28 +8,19 @@ const App = () => {
   const [all,setAll]=useState(0)
   const [score, setScore]=useState(0)
 
-
   const handleGood = () => {
-    let gud=good+1
-    setGood(gud)
-    setAll(getAll(gud,bad,neutral))
+    setGood(good+1)
+    setAll(all+1)
     setScore(score+1)
   }
   const handleNeutral = () => {
-    let neutr=neutral+1
-    setNeutral(neutr)
-    setAll(getAll(good,bad,neutr))
-
+    setNeutral(neutral+1)
+    setAll(all+1)
   }
   const handleBad = () => {
-    let bd = bad+1
-    setBad(bd)
-    setAll(getAll(good,bd,neutral))
+    setBad(bad+1)
+    setAll(all+1)
     setScore(score-1)
-  }
-  const getAll = (good, bad, neutral) =>
-  {
-   return (good+bad+neutral) 
   }
 
   return (
@@ -38,18 +29,7 @@ const App = () => {
       <Button handleClick = {handleGood} text="good"/>
       <Button handleClick = {handleNeutral} text="neutral"/>
       <Button handleClick = {handleBad} text="bad"/>
-      <h2>statistics</h2>
-      <a>good: {good}</a>
-      <br></br>
-      <a>neutral: {neutral}</a>
-      <br></br>
-      <a>bad: {bad}</a>
-      <br></br>
-      <a>all: {all}</a>
-      <br></br>
-      <a>average: {score/all}</a>
-      <br></br>
-      <a>percent: {good/all}%</a>
+      <Statistics good={good} bad={bad} neutral={neutral} score={score} all={all} />
     </div>
   )
 }
@@ -59,5 +39,29 @@ const Button = ({ handleClick, text }) => (
     {text}
   </button>
 )
+
+const Statistics= (props) =>{
+  let good=props.good
+  let bad=props.bad
+  let neutral=props.neutral
+  let score=props.score
+  let all=props.all
+return(
+  <>
+  <h2>statistics</h2>
+  <a>good: {good}</a>
+  <br></br>
+  <a>neutral: {neutral}</a>
+  <br></br>
+  <a>bad: {bad}</a>
+  <br></br>
+  <a>all: {all}</a>
+  <br></br>
+  <a>average: {score/all}</a>
+  <br></br>
+  <a>percent: {good/all}%</a>
+  </>
+)
+}
 
 export default App
