@@ -39,6 +39,12 @@ const Button = ({ handleClick, text }) => (
     {text}
   </button>
 )
+const StatisticsLine = ({text,value,unit})=>(
+  <>
+  <a>{text} : {value} {unit}</a>
+  <br></br>
+  </>
+)
 
 const Statistics= (props) =>{
   let good=props.good
@@ -50,17 +56,12 @@ const Statistics= (props) =>{
     return(
       <>
       <h2>statistics</h2>
-      <a>good: {good}</a>
-      <br></br>
-      <a>neutral: {neutral}</a>
-      <br></br>
-      <a>bad: {bad}</a>
-      <br></br>
-      <a>all: {all}</a>
-      <br></br>
-      <a>average: {score/all}</a>
-      <br></br>
-      <a>percent: {good/all}%</a>
+      <StatisticsLine text="good" value = {good}></StatisticsLine>
+      <StatisticsLine text="neutral" value = {neutral}></StatisticsLine>
+      <StatisticsLine text="bad" value = {bad}></StatisticsLine>
+      <StatisticsLine text="all" value = {all}></StatisticsLine>
+      <StatisticsLine text="average" value = {score/all}></StatisticsLine>
+      <StatisticsLine text="percent" value = {good/all} unit="%"></StatisticsLine>
       </>
     )
     }
