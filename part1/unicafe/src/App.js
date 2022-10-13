@@ -46,22 +46,33 @@ const Statistics= (props) =>{
   let neutral=props.neutral
   let score=props.score
   let all=props.all
-return(
-  <>
-  <h2>statistics</h2>
-  <a>good: {good}</a>
-  <br></br>
-  <a>neutral: {neutral}</a>
-  <br></br>
-  <a>bad: {bad}</a>
-  <br></br>
-  <a>all: {all}</a>
-  <br></br>
-  <a>average: {score/all}</a>
-  <br></br>
-  <a>percent: {good/all}%</a>
-  </>
-)
+  if (all>0) { 
+    return(
+      <>
+      <h2>statistics</h2>
+      <a>good: {good}</a>
+      <br></br>
+      <a>neutral: {neutral}</a>
+      <br></br>
+      <a>bad: {bad}</a>
+      <br></br>
+      <a>all: {all}</a>
+      <br></br>
+      <a>average: {score/all}</a>
+      <br></br>
+      <a>percent: {good/all}%</a>
+      </>
+    )
+    }
+  else{
+    return(
+      <>
+      <h2>statistics</h2>
+      <a>No feedback given</a>
+      <br></br>
+      </>
+    )
+  }
 }
 
 export default App
