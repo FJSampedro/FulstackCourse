@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -7,6 +7,8 @@ const App = () => {
   ]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [filter, setFilter]=useState("")
+  const [persons2Show, setPersons2Show] = useState(persons)
 
   const addName = (event) => {
     event.preventDefault()
@@ -17,6 +19,7 @@ const App = () => {
     else{
       setPersons(persons.concat({"name":newName,"number":newNumber}))
       setNewName('')
+      setNewNumber('')
     }
   }
 
@@ -30,6 +33,23 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  const handleFilterChange = (event) =>{
+    console.log(event)
+    setFilter(event.target.value)
+  }
+
+  const filterPersons = () =>{
+    if (!Boolean(filter)){
+      setPersons2Show(persons)
+    }
+    else{
+      console.log(filter)
+      setPersons2Show(persons.filter(person=>person.name.includes(filter)))
+    }
+  }
+
+  useEffect(filterPersons,[filter,persons])
+
   const Name=({name})=>{
     return(
       <li>{name}</li>
@@ -39,6 +59,12 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        filter shown with <input value={filter} onChange={handleFilterChange}/> 
+      </div>
+      <div>
+        <h2>add a new</h2>
+      </div>
       <form onSubmit={addName}>
         <div>
           name: <input value={newName} onChange={handleNameChange}/>
@@ -51,7 +77,7 @@ const App = () => {
       <h2>Numbers</h2>
       <div>debug: {newName}</div>
       { <ul>
-        {persons.map(person =>
+        {persons2Show.map(person =>
           <Name key={person.name} name={`${person.name} - ${person.number}`}/>
         )}
       </ul> }
