@@ -14,6 +14,10 @@ const handleFilterChange = (event) => {
   setFilter(event.target.value)
 }
 
+const buttonHandler = (country) =>{ 
+  setFilter(country)
+ }
+
 const filterCountries = () => {
   if (!Boolean(filter)) {
     setCountries2Show(countries)
@@ -32,18 +36,15 @@ const countriesHook = () =>{
     .get('https://restcountries.com/v3.1/all')
     .then(response => {
       console.log('promise fulfilled')
-      setCountries(response.data)
-      console.log(response.data[0]);
+      setCountries(response.data);
     })
 }
 useEffect(countriesHook,[])
 
-
-
   return (
     <div className="App">
       <Filter filter={filter} handleFilterChange={handleFilterChange}/>
-      <CountryInfo countries={countries2Show}/>
+      <CountryInfo countries={countries2Show} handler={buttonHandler}/>
     </div>
   );
 }
