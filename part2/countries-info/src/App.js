@@ -41,6 +41,8 @@ const countriesHook = () =>{
 }
 useEffect(countriesHook,[])
 
+//weatherHook("London")
+
   return (
     <div className="App">
       <Filter filter={filter} handleFilterChange={handleFilterChange}/>
@@ -50,3 +52,4 @@ useEffect(countriesHook,[])
 }
 
 export default App;
+

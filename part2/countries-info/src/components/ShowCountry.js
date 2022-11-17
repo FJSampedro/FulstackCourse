@@ -1,5 +1,7 @@
 import ShowLanguageList from "./ShowLanguageList"
+import WeatherInfo from "./WeatherInfo"
 const ShowCountry = ({country})=>{
+
     console.log(country)
     return(
         <div>
@@ -14,6 +16,9 @@ const ShowCountry = ({country})=>{
             </div>
             <div>
                 <img src={country.flags.svg} width="150" height="100" ></img>
+            </div>
+            <div>
+                <WeatherInfo city={country.capital[0]}/>
             </div>
         </div>
     )
