@@ -2,6 +2,8 @@ import Note from './components/Note'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
+import noteService from './services/notes'
+
 const App = (props) => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState(
@@ -11,8 +13,10 @@ const App = (props) => {
 
   const hook = () => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/notes')
+    // axios
+    //   .get('http://localhost:3001/notes') // Sustituimos por servicio dentro de ./services/notes.js
+    noteService
+    .getAll()
       .then(response => {
         console.log('promise fulfilled')
         setNotes(response.data)
@@ -37,8 +41,10 @@ const App = (props) => {
       important: Math.random() < 0.5,
       // id: notes.length + 1, //No introducimos el id para que sea la BBDD la que lo introduzca automaticamente.
     }
-    axios
-    .post('http://localhost:3001/notes', noteObject)
+    // axios
+    // .post('http://localhost:3001/notes', noteObject) // Sustituimos por servicio dentro de ./services/notes.js
+    noteService
+    .create(noteObject)
     .then(response => {
       setNotes(notes.concat(response.data))
       setNewNote('')
@@ -51,11 +57,15 @@ const App = (props) => {
   }
 
   const toggleImportanceOf = (id) => {
-    const url = `http://localhost:3001/notes/${id}`
+    // const url = `http://localhost:3001/notes/${id}`
     const note = notes.find(n => n.id === id)
     const changedNote = { ...note, important: !note.important }
   
-    axios.put(url, changedNote).then(response => {
+    // axios
+    // .put(url, changedNote)// Sustituimos por servicio dentro de ./services/notes.js
+    noteService
+    .update(id,changedNote)
+    .then(response => {
       setNotes(notes.map(note => note.id !== id ? note : response.data))
     })
   }
