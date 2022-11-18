@@ -22,7 +22,7 @@
       "id": 4,
       "content": "PATCH and UPDATE are other methods of HTTP protocol",
       "date": "2022-1-17T19:20:14.298Z",
-      "important": true
+      "important": false
     },
     {
       "content": "a new note of achilipu",
@@ -45,8 +45,14 @@
     {
       "content": "a new note...",
       "date": "2022-11-18T07:36:45.048Z",
-      "important": false,
+      "important": true,
       "id": 8
+    },
+    {
+      "content": "a new note...",
+      "date": "2022-11-18T07:52:59.482Z",
+      "important": false,
+      "id": 9
     }
   ]
 }

@@ -17,9 +17,9 @@ const App = (props) => {
     //   .get('http://localhost:3001/notes') // Sustituimos por servicio dentro de ./services/notes.js
     noteService
     .getAll()
-      .then(response => {
+      .then(initialNotes  => {
         console.log('promise fulfilled')
-        setNotes(response.data)
+        setNotes(initialNotes)
       })
   }
 
@@ -45,8 +45,8 @@ const App = (props) => {
     // .post('http://localhost:3001/notes', noteObject) // Sustituimos por servicio dentro de ./services/notes.js
     noteService
     .create(noteObject)
-    .then(response => {
-      setNotes(notes.concat(response.data))
+    .then(returnedNote  => {
+      setNotes(notes.concat(returnedNote ))
       setNewNote('')
     })
   }
@@ -65,8 +65,8 @@ const App = (props) => {
     // .put(url, changedNote)// Sustituimos por servicio dentro de ./services/notes.js
     noteService
     .update(id,changedNote)
-    .then(response => {
-      setNotes(notes.map(note => note.id !== id ? note : response.data))
+    .then(returnedNote  => {
+      setNotes(notes.map(note => note.id !== id ? note : returnedNote ))
     })
   }
 
