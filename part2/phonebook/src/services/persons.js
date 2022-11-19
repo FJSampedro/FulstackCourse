@@ -5,12 +5,22 @@ const addPerson = (newPerson) => {
     const request = axios.post(baseUrl, newPerson)
     return request.then(response => response.data);
 }
+
 const getPersons = () => {
     const request = axios.get(baseUrl)
     return request.then(response => response.data)
 }
-const deletePersons = (person) =>{
-    const request = axios.delete(baseUrl+`/${person}`)
+
+const deletePerson = (id) =>{
+    const request = axios.delete(baseUrl+`/${id}`)
     return request.then(response=>response)
 }
-export default {addPerson, getPersons, deletePersons}
+
+const updatePerson = (person) => {
+    const request = axios.put(baseUrl+`/${person.id}`, person)
+    return request.then(response=> response)
+}
+
+const personsService = {addPerson, getPersons, deletePerson, updatePerson}
+
+export default personsService
