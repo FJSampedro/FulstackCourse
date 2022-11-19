@@ -3,6 +3,7 @@ import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import personsService from './services/persons'
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -20,11 +21,11 @@ const App = () => {
     else {
       const newPerson = { "name": newName, "number": newNumber }
       personsService.addPerson(newPerson)
-      .then(returnName=>{
-        setPersons(persons.concat(returnName))
-        setNewName('')
-        setNewNumber('')
-      }); 
+        .then(returnName => {
+          setPersons(persons.concat(returnName))
+          setNewName('')
+          setNewNumber('')
+        });
     }
   }
 
@@ -43,6 +44,12 @@ const App = () => {
     setFilter(event.target.value)
   }
 
+  const deleteHandler = (id) => {
+    if (window.confirm("Do you want to delete this contact?")) {
+      personsService.deletePersons(id)
+        .then(setPersons(persons.filter(person => person.id !== id)))
+    }
+  }
   const filterPersons = () => {
     if (!Boolean(filter)) {
       setPersons2Show(persons)
@@ -55,7 +62,7 @@ const App = () => {
 
   useEffect(filterPersons, [filter, persons])
 
-  const personsHook = () =>{ 
+  const personsHook = () => {
     console.log('effect')
     personsService
       .getPersons()
@@ -64,20 +71,20 @@ const App = () => {
         setPersons(personsGet)
       })
   }
-  useEffect(personsHook,[])
+  useEffect(personsHook, [])
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter filter={filter} handleFilterChange={handleFilterChange}/>
+      <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <h2>Add a new</h2>
-      <PersonForm addName={addName} 
-                  newName={newName} 
-                  newNumber={newNumber} 
-                  handleNameChange={handleNameChange} 
-                  handleNumberChange={handleNumberChange}/>
+      <PersonForm addName={addName}
+        newName={newName}
+        newNumber={newNumber}
+        handleNameChange={handleNameChange}
+        handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
-      <Numbers personsList={persons2Show} />
+      <Numbers personsList={persons2Show} deleteHandler={deleteHandler} />
     </div>
   )
 }

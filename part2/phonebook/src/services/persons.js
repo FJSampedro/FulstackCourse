@@ -9,4 +9,8 @@ const getPersons = () => {
     const request = axios.get(baseUrl)
     return request.then(response => response.data)
 }
-export default {addPerson, getPersons}
+const deletePersons = (person) =>{
+    const request = axios.delete(baseUrl+`/${person}`)
+    return request.then(response=>response)
+}
+export default {addPerson, getPersons, deletePersons}
