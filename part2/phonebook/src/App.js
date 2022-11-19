@@ -1,7 +1,7 @@
 import Numbers from './components/Numbers'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
-import axios from 'axios'
+import personsService from './services/persons'
 import { useState, useEffect } from 'react'
 
 const App = () => {
@@ -19,10 +19,9 @@ const App = () => {
     }
     else {
       const newPerson = { "name": newName, "number": newNumber }
-      axios
-      .post('http://localhost:3001/persons', newPerson)
-      .then(response=>{
-        setPersons(persons.concat(response.data))
+      personsService.addPerson(newPerson)
+      .then(returnName=>{
+        setPersons(persons.concat(returnName))
         setNewName('')
         setNewNumber('')
       }); 
@@ -58,11 +57,11 @@ const App = () => {
 
   const personsHook = () =>{ 
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
+    personsService
+      .getPersons()
+      .then(personsGet => {
         console.log('promise fulfilled')
-        setPersons(response.data)
+        setPersons(personsGet)
       })
   }
   useEffect(personsHook,[])
