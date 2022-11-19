@@ -68,6 +68,12 @@ const App = (props) => {
     .then(returnedNote  => {
       setNotes(notes.map(note => note.id !== id ? note : returnedNote ))
     })
+    .catch(error=>{                                                       //Captura el error al intentar resolver la promesa
+      alert(
+        `the note '${note.content}' was already deleted from server`
+      )
+      setNotes(notes.filter(n=>n.id !== id))
+    })
   }
 
   return (
