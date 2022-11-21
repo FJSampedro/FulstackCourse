@@ -77,6 +77,16 @@ const App = () => {
           }, 5000),
           setPersons(persons.filter(person => person.id !== deletePerson.id))
           )
+        .catch(
+          setNotificationMessage(
+            `New Contact '${deletePerson.name}' : '${deletePerson.number}' is deleted from the phonebook`
+          ),
+          setIsError(true),
+          setTimeout(() => {
+            setNotificationMessage(null)
+            setIsError()
+          }, 5000)
+        )
     }
   }
   const filterPersons = () => {
