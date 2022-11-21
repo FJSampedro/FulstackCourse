@@ -1,6 +1,7 @@
 import Numbers from './components/Numbers'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
+import Notification from './components/Notification'
 import personsService from './services/persons'
 import { useState, useEffect } from 'react'
 
@@ -10,6 +11,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState("")
   const [persons2Show, setPersons2Show] = useState(persons)
+  const [notificationMessage, setNotificationMessage] = useState(null)
+  const [isError, setIsError] = useState()
 
   const addName = (event) => {
     event.preventDefault()
@@ -20,6 +23,12 @@ const App = () => {
         const newPerson = { ...oldPerson, number: newNumber }
         personsService.updatePerson(newPerson)
           .then(
+            setNotificationMessage(
+              `New Contact '${newPerson.name}' : '${newPerson.number}' is updated into the phonebook`
+            ),
+            setTimeout(() => {
+              setNotificationMessage(null)
+            }, 5000),
             setPersons(
               persons.map(person => person.name === newPerson.name ? newPerson : person)))
       }
@@ -28,6 +37,12 @@ const App = () => {
       const newPerson = { "name": newName, "number": newNumber }
       personsService.addPerson(newPerson)
         .then(returnName => {
+          setNotificationMessage(
+            `New Contact '${newPerson.name}' : '${newPerson.number}' is added to the phonebook`
+          )
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000)
           setPersons(persons.concat(returnName))
           setNewName('')
           setNewNumber('')
@@ -50,10 +65,18 @@ const App = () => {
     setFilter(event.target.value)
   }
 
-  const deleteHandler = (id) => {
+  const deleteHandler = (deletePerson) => {
     if (window.confirm("Do you want to delete this contact?")) {
-      personsService.deletePerson(id)
-        .then(setPersons(persons.filter(person => person.id !== id)))
+      personsService.deletePerson(deletePerson.id)
+        .then(
+          setNotificationMessage(
+            `New Contact '${deletePerson.name}' : '${deletePerson.number}' is deleted from the phonebook`
+          ),
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000),
+          setPersons(persons.filter(person => person.id !== deletePerson.id))
+          )
     }
   }
   const filterPersons = () => {
@@ -82,6 +105,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notificationMessage} isError={isError} />
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <h2>Add a new</h2>
       <PersonForm addName={addName}

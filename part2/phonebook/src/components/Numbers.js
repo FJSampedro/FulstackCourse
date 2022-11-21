@@ -4,7 +4,7 @@ const Numbers=({personsList, deleteHandler})=>{
         <div>
         { <ul>
           {personsList.map(person =>
-            <Person key={person.name} person={person} deleteHandler={()=>deleteHandler(person.id)}/>
+            <Person key={person.name} person={person} deleteHandler={()=>deleteHandler(person)}/>
           )}
         </ul> }
         </div>
