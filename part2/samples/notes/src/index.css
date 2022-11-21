@@ -1,0 +1,13 @@
+h1 {
+    color: green;
+}
+li {
+    color: grey;
+    padding-top: 3px;
+    font-size: 15px;
+  }
+.note{
+    color: red;
+    padding-top: 5px;
+    font-size: 15px;
+}
