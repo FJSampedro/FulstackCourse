@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
 app.use(express.json())
+app.set('view engine','pug')
 
 let persons = [
     {
@@ -27,6 +28,11 @@ let persons = [
 
 app.get('/api/persons', (request, response) => {
     response.json(persons)
+})
+
+app.get('/info', (request, response) => {
+    console.log();
+    response.render('index', { title: 'Phonebook info', personsNumber: persons.length, date:Date().toLocaleString()})
 })
 
 const PORT = 3001
