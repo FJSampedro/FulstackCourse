@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 app.use(express.json())
-app.set('view engine','pug')
+app.set('view engine', 'pug')
 
 let persons = [
     {
@@ -28,7 +28,7 @@ let persons = [
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
-  }
+}
 
 app.get('/api/persons', (request, response) => {
     response.json(persons)
@@ -36,7 +36,7 @@ app.get('/api/persons', (request, response) => {
 
 app.get('/info', (request, response) => {
     console.log();
-    response.render('index', { title: 'Phonebook info', personsNumber: persons.length, date:Date().toLocaleString()})
+    response.render('index', { title: 'Phonebook info', personsNumber: persons.length, date: Date().toLocaleString() })
 })
 
 app.get('/api/persons/:id', (request, response) => {
@@ -61,13 +61,23 @@ app.post('/api/persons', (request, response) => {
 
     if (!body.name) {
         return response.status(400).json({
-            error: 'content missing'
+            error: 'name is missing'
+        })
+    }
+    if (!body.number) {
+        return response.status(400).json({
+            error: 'number is missing'
+        })
+    }
+    if (persons.map(person => person.name).includes(body.name) === true) {
+        return response.status(400).json({
+            error: 'name must be unique'
         })
     }
 
     const person = {
         name: body.name,
-        number: body.number || "555-555555",
+        number: body.number,
         id: getRandomInt(999999999999),
     }
 
