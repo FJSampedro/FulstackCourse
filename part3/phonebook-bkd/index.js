@@ -26,6 +26,10 @@ let persons = [
     }
 ]
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
 app.get('/api/persons', (request, response) => {
     response.json(persons)
 })
@@ -50,6 +54,26 @@ app.delete('/api/persons/:id', (request, response) => {
     persons = persons.filter(note => note.id !== id)
 
     response.status(204).end()
+})
+
+app.post('/api/persons', (request, response) => {
+    const body = request.body
+
+    if (!body.name) {
+        return response.status(400).json({
+            error: 'content missing'
+        })
+    }
+
+    const person = {
+        name: body.name,
+        number: body.number || "555-555555",
+        id: getRandomInt(999999999999),
+    }
+
+    persons = persons.concat(person)
+
+    response.json(person)
 })
 
 const PORT = 3001
