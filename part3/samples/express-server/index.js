@@ -1,6 +1,20 @@
 const express = require("express")
 const app = express()
-app.use(express.json())
+app.use(express.json()) //esto es una llamada a un middleware, una funcion que express ejecuta sobre la peticion antes de darla a nuestra funcion
+
+const requestLogger = (request, response, next) => { // Esta es una definicion de un custom middleware, siempre tienen que tener estos tres parametros.
+    console.log('Method:', request.method) //los middleware suelen definirse y llamarse ANTES de las rutas 
+    console.log('Path:  ', request.path)  //pero tambien pueden ser llamados despues de ellas para ser usados en caso de que las rutas anteriores no gestionen la peticion
+    console.log('Body:  ', request.body)
+    console.log('---')
+    next()
+  }
+
+  const unknownEndpoint = (request, response) => { //Custom middleware que gestiona un endpoint desconocido
+    response.status(404).send({ error: 'unknown endpoint' })
+  }
+
+app.use(requestLogger) //llamada a nuestro custom middleware
 
 let notes = [
     {
@@ -76,6 +90,8 @@ app.post('/api/notes', (request, response) => {
 
     response.json(note)
 })
+ 
+app.use(unknownEndpoint) //llamada al middleware que gestiona un endpoint desconocido
 
 const PORT = 3001
 app.listen(PORT)
