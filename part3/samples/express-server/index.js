@@ -1,5 +1,7 @@
 const express = require("express")
+const cors = require("cors")
 const app = express()
+app.use(cors())
 app.use(express.json()) //esto es una llamada a un middleware, una funcion que express ejecuta sobre la peticion antes de darla a nuestra funcion
 
 const requestLogger = (request, response, next) => { // Esta es una definicion de un custom middleware, siempre tienen que tener estos tres parametros.
