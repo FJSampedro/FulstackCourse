@@ -9,5 +9,7 @@
 - <b>npm install --save-dev nodemon</b> Instalar nodemon como development (reinicia la aplicacion de node cuando guardamos)
 - <b>node_modules/.bin/nodemon index.js</b> Iniciar el proyecto con nodemon.
 - <b>npm run dev</b> Iniciar el proyecto con nodemon (necesita añadir el comando <i>"dev": "nodemon index.js"</i> dentro de scripts en el package.json)
-- <b></b>
+- <b>npm run build</b> Empaqueta el codigo de una app en la carpeta build
+- <b>npm install -g serve</b> instala un servidor para el build de la app.
+- <b>serve -s build</b> arranca el build generado.
 - <b></b>
