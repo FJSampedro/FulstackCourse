@@ -13,4 +13,6 @@
 - <b>npm install -g serve</b> Instala un servidor para el build de la app.
 - <b>serve -s build</b> Arranca el build generado. 
 - <b>node --inspect index.js</b> Lanza el debugger de node, de manera que podemos usar la consola de debugging de chrome
+- <b>npm install mongoose</b> Instalar mongoose para gestionar la conexion a MongoDB
+- <b></b>
 - <b></b>
