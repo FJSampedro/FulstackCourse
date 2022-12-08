@@ -35,10 +35,7 @@ app.get('/api/persons/:id', (request, response) => {
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    persons = persons.filter(note => note.id !== id)
-
-    response.status(204).end()
+    Person.findByIdAndDelete(request.params.id).then(response.status(204).end())
 })
 
 app.post('/api/persons', (request, response) => {
@@ -54,21 +51,15 @@ app.post('/api/persons', (request, response) => {
             error: 'number is missing'
         })
     }
-    if (persons.map(person => person.name).includes(body.name) === true) {
-        return response.status(400).json({
-            error: 'name must be unique'
-        })
-    }
 
-    const person = {
+    const person = new Person({
         name: body.name,
         number: body.number,
-        id: getRandomInt(999999999999),
-    }
+    })
 
-    persons = persons.concat(person)
-
-    response.json(person)
+    person.save().then(savedPerson => {
+        response.json(savedPerson)
+    })
 })
 
 const PORT = process.env.PORT || 3001
