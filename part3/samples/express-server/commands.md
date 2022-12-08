@@ -14,5 +14,6 @@
 - <b>serve -s build</b> Arranca el build generado. 
 - <b>node --inspect index.js</b> Lanza el debugger de node, de manera que podemos usar la consola de debugging de chrome
 - <b>npm install mongoose</b> Instalar mongoose para gestionar la conexion a MongoDB
-- <b></b>
+- <b>npm install dotenv</b> Instalar libreria de gestion de archivos .env
+- <b>node mongo.js</b> arrancar el script mongo.js
 - <b></b>
