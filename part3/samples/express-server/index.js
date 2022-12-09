@@ -7,18 +7,6 @@ const app = express()
 app.use(cors())
 app.use(express.json()) //esto es una llamada a un middleware, una funcion que express ejecuta sobre la peticion antes de darla a nuestra funcion
 
-const errorHandler = (error, request, response, next) => { //Middleware manejador de errores
-    console.error(error.message)
-
-    if (error.name === 'CastError') { //comprueba si es un cast error, lo que implica ID de objeto no válido para Mongo
-        return response.status(400).send({ error: 'malformatted id' })
-    }
-
-    next(error)
-}
-
-app.use(errorHandler) //Llamada al middleware de gestion de errores
-
 const requestLogger = (request, response, next) => { // Esta es una definicion de un custom middleware, siempre tienen que tener estos tres parametros.
     console.log('Method:', request.method) //los middleware suelen definirse y llamarse ANTES de las rutas 
     console.log('Path:  ', request.path)  //pero tambien pueden ser llamados despues de ellas para ser usados en caso de que las rutas anteriores no gestionen la peticion
@@ -77,25 +65,21 @@ app.delete('/api/notes/:id', (request, response, next) => {
         .catch(error => next(error))
 })
 
-app.post('/api/notes', (request, response) => {
+app.post('/api/notes', (request, response, next) => {
     const body = request.body
-
-    if (!body.content) {
-        return response.status(400).json({
-            error: 'content missing'
-        })
-    }
-
+  
     const note = new Note({
-        content: body.content,
-        important: body.important || false,
-        date: new Date(),
+      content: body.content,
+      important: body.important || false,
+      date: new Date(),
     })
-
-    note.save().then(savedNote => {
-        response.json(savedNote)
-    })
-})
+  
+    note.save()
+      .then(savedNote => {
+        response.json(savedNote.toJSON())
+      })
+      .catch(error => next(error))
+  })
 
 app.put('/api/notes/:id', (request, response, next) => {
     const body = request.body
@@ -116,6 +100,23 @@ const unknownEndpoint = (request, response) => { //Custom middleware que gestion
     response.status(404).send({ error: 'unknown endpoint' })
 }
 app.use(unknownEndpoint) //llamada al middleware que gestiona un endpoint desconocido
+
+const errorHandler = (error, request, response, next) => { //Middleware manejador de errores
+    //console.error(error.message)
+
+    if (error.name === 'CastError') { //comprueba si es un cast error, lo que implica ID de objeto no válido para Mongo
+        return response.status(400).send({ error: 'malformatted id' })
+    }
+    else if (error.name === 'ValidationError') {
+        return response.status(400).json({ error: error.message })
+      }
+    else {
+        return response.status(500).send(error.message)
+    }
+    next(error) //si un error no es captado por este manejador puede ser enviado al middleware siguiente 
+}
+
+app.use(errorHandler) //Llamada al middleware de gestion de errores
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT)
