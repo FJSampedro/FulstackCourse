@@ -13,31 +13,27 @@ app.use(morgan(":method :url :status :res[content-length] - :response-time ms :e
 
 app.set('view engine', 'pug')
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
-
 app.get('/info', (request, response) => {
     console.log();
     response.render('index', { title: 'Phonebook info', personsNumber: persons.length, date: Date().toLocaleString() })
 })
 
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (request, response,next) => {
     Person.find({}).then(persons => {
         response.json(persons)
-    })
+    }).catch(error=>next(error))
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response,next) => {
     Person.findById(request.params.id).then(person => {
         response.json(person)
-    }).catch(error=>{response.status(404).end()})
+    }).catch(error=>next(error))
 })
 
 app.delete('/api/persons/:id', (request, response) => {
     Person.findByIdAndDelete(request.params.id)
     .then(response.status(204).end())
-    .catch(error=>response.status(500).end())
+    .catch(error=>next(error))
 })
 
 app.post('/api/persons', (request, response) => {
@@ -63,6 +59,19 @@ app.post('/api/persons', (request, response) => {
         response.json(savedPerson)
     })
 })
+
+const errorHandler = (error, request, response, next) => { 
+    console.log("pepico")
+    console.error(error.message)
+    if (error.name === 'CastError') { 
+        return response.status(400).send({ error: 'wrong id' })
+    }
+    else
+    {
+        return response.status(500).end()
+    }
+}
+app.use(errorHandler) //Por alguna razon esto debe ir AL FINAL de todo el codigo
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
