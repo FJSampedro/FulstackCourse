@@ -14,8 +14,9 @@ app.use(morgan(":method :url :status :res[content-length] - :response-time ms :e
 app.set('view engine', 'pug')
 
 app.get('/info', (request, response) => {
-    console.log();
-    response.render('index', { title: 'Phonebook info', personsNumber: persons.length, date: Date().toLocaleString() })
+    Person.countDocuments()
+    .then(count=>response.render('index', { title: 'Phonebook info', personsNumber: count, date: Date().toLocaleString() }))
+    .catch(error=>next(error))
 })
 
 app.get('/api/persons', (request, response,next) => {
@@ -75,7 +76,6 @@ app.put('/api/notes/:id', (request, response, next) => {
 })
 
 const errorHandler = (error, request, response, next) => { 
-    console.log("pepico")
     console.error(error.message)
     if (error.name === 'CastError') { 
         return response.status(400).send({ error: 'wrong id' })
