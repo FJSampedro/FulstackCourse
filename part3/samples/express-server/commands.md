@@ -16,4 +16,11 @@
 - <b>npm install mongoose</b> Instalar mongoose para gestionar la conexion a MongoDB
 - <b>npm install dotenv</b> Instalar libreria de gestion de archivos .env
 - <b>node mongo.js</b> arrancar el script mongo.js
+- <b>npm install eslint --save-dev</b> Instalar el linter eslint
+- <b>node_modules/.bin/eslint --init</b> Crear la configuracion inicial del eslint
+- <b>node_modules/.bin/eslint index.js</b> Ejecutar el linter en el archivo index.js
+- <b>npm run lint</b> Ejecutar el linter en el directorio como se indica en package.json
+- <b>node_modules/.bin/eslint --fix .</b> Ejecutar un fix en el linter
+- <b></b>
+- <b></b>
 - <b></b>
