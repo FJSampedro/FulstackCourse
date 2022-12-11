@@ -30,7 +30,19 @@ const App = () => {
               setNotificationMessage(null)
             }, 5000),
             setPersons(
-              persons.map(person => person.name === newPerson.name ? newPerson : person)))
+              persons.map(person => person.name === newPerson.name ? newPerson : person))
+          )
+          .catch(error => {
+            console.log(error.response.data)
+            setNotificationMessage(
+              error.response.data.error.toString()
+            )
+            setIsError(true)
+            setTimeout(() => {
+              setNotificationMessage(null)
+              setIsError(null)
+            }, 5000)
+          })
       }
     }
     else {
@@ -46,7 +58,18 @@ const App = () => {
           setPersons(persons.concat(returnName))
           setNewName('')
           setNewNumber('')
-        });
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          setNotificationMessage(
+            error.response.data.error.toString()
+          )
+          setIsError(true)
+          setTimeout(() => {
+            setNotificationMessage(null)
+            setIsError(null)
+          }, 5000)
+        })
     }
   }
 
@@ -76,7 +99,7 @@ const App = () => {
             setNotificationMessage(null)
           }, 5000),
           setPersons(persons.filter(person => person.id !== deletePerson.id))
-          )
+        )
         .catch(
           setNotificationMessage(
             `New Contact '${deletePerson.name}' : '${deletePerson.number}' is deleted from the phonebook`
