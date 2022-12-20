@@ -21,6 +21,6 @@
 - <b>node_modules/.bin/eslint index.js</b> Ejecutar el linter en el archivo index.js
 - <b>npm run lint</b> Ejecutar el linter en el directorio como se indica en package.json
 - <b>node_modules/.bin/eslint --fix .</b> Ejecutar un fix en el linter
-- <b></b>
+- <b>npm install --save-dev jest</b> instalar el tester jest
 - <b></b>
 - <b></b>

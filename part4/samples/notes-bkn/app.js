@@ -23,7 +23,7 @@ app.use(express.json())
 app.use(middleware.requestLogger)
 
 app.use('/api/notes', notesRouter)  //Notes router es un objeto de middleware diseñado para redirigir una ruta
-                //el router usa rutas relativas que parten de la ruta indicada en la implementacion del middleware
+//el router usa rutas relativas que parten de la ruta indicada en la implementacion del middleware
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
