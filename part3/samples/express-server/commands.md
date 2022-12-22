@@ -22,5 +22,12 @@
 - <b>npm run lint</b> Ejecutar el linter en el directorio como se indica en package.json
 - <b>node_modules/.bin/eslint --fix .</b> Ejecutar un fix en el linter
 - <b>npm install --save-dev jest</b> instalar el tester jest
+- <b>npm install --save-dev cross-env</b> Instalar cross-env para desarrollar en windows
+- <b>"dev": "cross-env NODE_ENV=development nodemon index.js",</b>  Se añade cross-env en windows para poder cargar las variables de entorno directamente desde el comando.
+- <b>npm install --save-dev supertest</b> Instala supertest, que sirve para simular un http server para testeo
+- <b>npm test -- test/note_api.test.js</b> Arranca todos los test dentro del archivo test/note_api.test.js
+- <b>npm test -- -t 'a specific note is within the returned notes'</b> ejecuta el test especificado entre comillas. Puede indicarse solo una parte del nombre.
+- <b></b>
+- <b></b>
 - <b></b>
 - <b></b>
