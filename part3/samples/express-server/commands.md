@@ -27,7 +27,7 @@
 - <b>npm install --save-dev supertest</b> Instala supertest, que sirve para simular un http server para testeo
 - <b>npm test -- test/note_api.test.js</b> Arranca todos los test dentro del archivo test/note_api.test.js
 - <b>npm test -- -t 'a specific note is within the returned notes'</b> ejecuta el test especificado entre comillas. Puede indicarse solo una parte del nombre.
-- <b></b>
+- <b>npm install express-async-errors</b> Instala la biblioteca para gestionar errores en async/await
 - <b></b>
 - <b></b>
 - <b></b>
