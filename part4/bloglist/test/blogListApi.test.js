@@ -80,7 +80,18 @@ test('Post operation work succesfully', async () => {
         url: "www.dummy.com",
         likes: 2,
     }
-    const postResponse = await api.post('/api/blogs',blog)
+    const postResponse = await api.post('/api/blogs').send(blog).expect(201)
     const getResponse = await api.get(`/api/blogs/${postResponse.body.id}`)
     expect(postResponse.body).toEqual(getResponse.body)
+})
+
+test('Post operation likes default to 0', async () => {
+    const blog={
+        title: "Dummy Title",
+        author: "Dummy Author",
+        url: "www.dummy.com",
+    }
+    const postResponse = await api.post('/api/blogs').send(blog).expect(201)
+    const getResponse = await api.get(`/api/blogs/${postResponse.body.id}`)
+    expect(getResponse.body.likes).toEqual(0)
 })
