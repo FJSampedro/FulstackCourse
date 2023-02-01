@@ -72,3 +72,15 @@ test('the id field exists', async () => {
     const response = await api.get('/api/blogs/5a422bc61b54a676234d17fc')
     expect(response.body.id).toBeDefined()
 })
+
+test('Post operation work succesfully', async () => {
+    const blog={
+        title: "Dummy Title",
+        author: "Dummy Author",
+        url: "www.dummy.com",
+        likes: 2,
+    }
+    const postResponse = await api.post('/api/blogs',blog)
+    const getResponse = await api.get(`/api/blogs/${postResponse.body.id}`)
+    expect(postResponse.body).toEqual(getResponse.body)
+})
