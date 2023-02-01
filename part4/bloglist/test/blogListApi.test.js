@@ -67,3 +67,8 @@ test('there are same number of blogs', async () => {
     const response = await api.get('/api/blogs')
     expect(response.body).toHaveLength(initialBlogs.length)
 })
+
+test('the id field exists', async () => {
+    const response = await api.get('/api/blogs/5a422bc61b54a676234d17fc')
+    expect(response.body.id).toBeDefined()
+})
