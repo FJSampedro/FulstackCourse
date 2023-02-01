@@ -95,3 +95,22 @@ test('Post operation likes default to 0', async () => {
     const getResponse = await api.get(`/api/blogs/${postResponse.body.id}`)
     expect(getResponse.body.likes).toEqual(0)
 })
+
+test('Post operation fails when dont have title or url', async () => {
+    const blogs=[{
+        author: "Dummy Author",
+        url: "www.dummy.com",
+        likes: 0
+    },
+    {
+        title: "Dummy Title",
+        author: "Dummy Author",
+        likes: 0
+    }]
+    let status = 0
+    for (const blog of blogs){
+        const postResponse = await api.post('/api/blogs').send(blog).expect(400)
+        status= postResponse.status
+    }     
+    expect(status).toEqual(400)
+})
