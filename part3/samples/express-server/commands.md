@@ -28,6 +28,13 @@
 - <b>npm test -- test/note_api.test.js</b> Arranca todos los test dentro del archivo test/note_api.test.js
 - <b>npm test -- -t 'a specific note is within the returned notes'</b> ejecuta el test especificado entre comillas. Puede indicarse solo una parte del nombre.
 - <b>npm install express-async-errors</b> Instala la biblioteca para gestionar errores en async/await
+- <b>npm install bcrypt</b> Instala la libreria para gestion de encriptacion
+- <b>npm install mongoose-unique-validator</b> Instala la libreria para gestion de elementos unicos en mongoose
+- <b>npm install jsonwebtoken</b> instala la libreria de gestion de jwt
+- <b></b>
+- <b></b>
+- <b></b>
+- <b></b>
 - <b></b>
 - <b></b>
 - <b></b>
