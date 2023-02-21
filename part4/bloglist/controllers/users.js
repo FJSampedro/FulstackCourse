@@ -1,27 +1,45 @@
-const bcrypt = require('bcrypt')
-const usersRouter = require('express').Router()
-const User = require('../models/user')
+const bcrypt = require("bcrypt")
+const mongoose = require("mongoose")
+const usersRouter = require("express").Router()
+const User = require("../models/user")
 
-usersRouter.post('/', async (request, response) => {
+class UserSignInError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = "UserSignInError"
+  }
+}
+
+usersRouter.post("/", async (request, response, next) => {
   const body = request.body
 
   const saltRounds = 10 //https://github.com/kelektiv/node.bcrypt.js/#a-note-on-rounds
-  const passwordHash = await bcrypt.hash(body.password, saltRounds)
+  try {
+    if (typeof body.username !== "string" || body.username.length < 3) {
+      throw new UserSignInError("Username must have length 3 or greater")
+    }
+    if (typeof body.password !== "string" || body.password.length < 3) {
+      throw new UserSignInError("Password must have length 3 or greater")
+    }
+    const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
-  const user = new User({
-    username: body.username,
-    name: body.name,
-    passwordHash,
-  })
+    const user = new User({
+      username: body.username,
+      name: body.name,
+      passwordHash,
+    })
 
-  const savedUser = await user.save()
+    const savedUser = await user.save()
 
-  response.json(savedUser)
+    response.status(201).json(savedUser)
+  } catch (error) {
+    next(error)
+  }
 })
 
-usersRouter.get('/', async (request, response) => {
-    const users = await User.find({}).populate('blogs', { content: 1, date: 1 }) //populate sirve para realizar una consulta de union
-    response.json(users)
-  })
+usersRouter.get("/", async (request, response) => {
+  const users = await User.find({}).populate("blogs", { content: 1, date: 1 }) //populate sirve para realizar una consulta de union
+  response.json(users)
+})
 
 module.exports = usersRouter
