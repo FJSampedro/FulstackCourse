@@ -5,17 +5,6 @@ const app = require("../app")
 const api = supertest(app) //configura un test de peticion a la api integrada en app
 const User = require("../models/user")
 
-const initialUser = [
-  {
-    _id: "5a422a851b54a676234d17f7",
-    title: "React patterns",
-    author: "Michael Chan",
-    url: "https://reactpatterns.com/",
-    likes: 7,
-    __v: 0,
-  },
-]
-
 beforeEach(async () => {
   await User.deleteMany({})
 })
